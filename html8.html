@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<script type="text/javascript">
+var canvas, ctx, flag = false,
+    prevX = 0,
+    currX = 0,
+    prevY = 0,
+    currY = 0,
+    dot_flag = false;
+
+var x = "black",
+    y = 2,
+    dr = "line";
+function init() {
+    canvas = document.getElementById('can');
+    ctx = canvas.getContext("2d");
+    w = canvas.width;
+    h = canvas.height;
+    canvas.addEventListener("mousedown", function (e) {
+        findxy('down', e)
+    }, false);
+    canvas.addEventListener("mouseup", function (e) {
+        findxy('up', e)
+    }, false);
+}
+function color(obj) {
+    y=2;
+    if(obj.id == "red"){
+	x = "red";	
+	return x;
+	}
+    if(obj.id == "blue"){
+	x = "blue";	
+	return x;
+	}
+    if(obj.id == "green"){
+	x = "green";	
+	return x;
+	}
+    if(obj.id == "yellow"){
+	x = "yellow";	
+	return x;
+	}
+    if(obj.id == "white"){
+	x = "white";
+	y=16	
+	return x,y;
+	}
+    if(obj.id == "orange"){
+	x = "orange";
+	return x,y;
+	}
+    else{
+	x = "black";
+	return x;
+	}
+}
+
+function draw(obj) {
+    ctx.beginPath();
+    if (obj.id == "line")
+    {
+    	dr="line";
+    }
+    else if (obj.id == "rect"){
+	dr="rect";    
+    }
+    else if (obj.id == "circle"){
+	dr="circle";
+    }
+    else if(obj.id == "clear"){
+	    ctx.clearRect(0, 0, canvas.width, canvas.height);
+	}
+}
+
+
+function findxy(res,e) {
+    if (res == 'down') {
+        prevX = e.clientX - canvas.offsetLeft;
+        prevY = e.clientY - canvas.offsetTop;
+	ctx.beginPath();
+	ctx.moveTo(prevX, prevY);
+	ctx.lineTo(prevX+1, prevY+1);
+    	ctx.strokeStyle = x;
+    	ctx.lineWidth = y;
+    	ctx.stroke();
+    	ctx.closePath();
+    }
+    if (res == 'up') {
+	currX = e.clientX - canvas.offsetLeft;
+	currY = e.clientY - canvas.offsetTop;
+	selectone();
+    }
+}
+
+function selectone(){
+	ctx.beginPath();
+	if(dr == "line"){
+	    ctx.moveTo(prevX, prevY);
+	    ctx.lineTo(currX, currY);
+	}
+	else if(dr == "rect"){
+	    ctx.rect(prevX,prevY,currX-prevX,currY-prevY);
+	}
+	else if(dr == "circle"){
+	    radius=(prevX-currX)^2+(prevY-currY)^2;
+	    ctx.arc(prevX, prevY, radius, 0, 2 * Math.PI, false); 
+	}
+	ctx.strokeStyle = x;
+	ctx.lineWidth = y;
+    	ctx.stroke();
+    	ctx.closePath();
+}
+
+</script>
+<body onload="init()">
+    <canvas id="can" width="800" height="500" style="border:2px solid;"></canvas>
+ <div style="position:absolute;top:15%;left:70%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
+    <div style="position:absolute;top:15%;left:71%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
+    <div style="position:absolute;top:15%;left:72%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
+    <div style="position:absolute;top:17%;left:70%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
+    <div style="position:absolute;top:17%;left:71%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
+    <div style="position:absolute;top:17%;left:72%;width:10px;height:10px;background:black;" id="black" onclick="color(this)"></div>
+	<div style="position:absolute;top:20%;left:70%;">Eraser</div>
+    <div style="position:absolute;top:23%;left:70%;width:10px;height:10px;background:white;border:1px solid;" id="white" onclick="color(this)" value="e" color="black"></div>
+<div style="position:absolute;top:26%;left:70%;">Rect</div>
+<div style="position:absolute;top:29%;left:70%;width:10px;height:10px;background:gray;border:1px solid;" id="rect" onclick="draw(this)"> 
+</div>
+<div style="position:absolute;top:32%;left:70%;">Line</div>
+<div style="position:absolute;top:35%;left:70%;width:10px;height:10px;background:gray;border:1px solid;" id="line" onclick="draw(this)"> 
+</div>
+<div style="position:absolute;top:37%;left:70%;">Circle</div>
+<div style="position:absolute;top:40%;left:70%;width:10px;height:10px;background:gray;border:1px solid;" id="circle" onclick="draw(this)"> 
+</div>
+<div style="position:absolute;top:43%;left:70%;">Clear</div>
+<div style="position:absolute;top:46%;left:70%;width:10px;height:10px;background:gray;border:1px solid;" id="clear" onclick="draw(this)"> 
+</div>
+
+</body>
+</html>
