@@ -1,13 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 <script type="text/javascript">
-var canvas, ctx, flag = false,
+var canvas, ctx,
     prevX = 0,
     currX = 0,
     prevY = 0,
-    currY = 0,
-    dot_flag = false;
-
+    currY = 0;
 var x = "black",
     y = 2,
     dr = "line";
@@ -23,36 +21,30 @@ function init() {
         findxy('up', e)
     }, false);
 }
+
 function color(obj) {
     y=2;
     if(obj.id == "red"){
 	x = "red";	
-	return x;
 	}
-    if(obj.id == "blue"){
+    else if(obj.id == "blue"){
 	x = "blue";	
-	return x;
 	}
-    if(obj.id == "green"){
+    else if(obj.id == "green"){
 	x = "green";	
-	return x;
 	}
-    if(obj.id == "yellow"){
+    else if(obj.id == "yellow"){
 	x = "yellow";	
-	return x;
 	}
-    if(obj.id == "white"){
+    else if(obj.id == "white"){
 	x = "white";
 	y=16	
-	return x,y;
 	}
-    if(obj.id == "orange"){
+    else if(obj.id == "orange"){
 	x = "orange";
-	return x,y;
 	}
     else{
 	x = "black";
-	return x;
 	}
 }
 
